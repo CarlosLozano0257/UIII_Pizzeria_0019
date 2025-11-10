@@ -19,5 +19,10 @@ urlpatterns = [
     path('inventario/actualizar/realizar/', views.realizar_actualizacion_inventario, name='realizar_actualizacion_inventario'),
     path('inventario/borrar/<int:id>/', views.borrar_inventario, name='borrar_inventario'),
     
-    # (Aquí irán las URLs de Menú más adelante)
+    # URLs de Menú (CRUD) (¡NUEVO!)
+    path('menu/', views.ver_menu, name='ver_menu'),
+    path('menu/agregar/', views.agregar_menu, name='agregar_menu'),
+    path('menu/actualizar/<int:id>/', views.actualizar_menu, name='actualizar_menu'),
+    path('menu/actualizar/realizar/', views.realizar_actualizacion_menu, name='realizar_actualizacion_menu'),
+    path('menu/borrar/<int:id>/', views.borrar_menu, name='borrar_menu'),
 ]

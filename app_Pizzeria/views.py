@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Proveedores, Inventario # <-- IMPORTANTE: Añadir Inventario
+from .models import Proveedores, Inventario, Menu # <-- IMPORTANTE: Añadir Menu
 import datetime # Necesario para el footer
 
 # ==========================================
@@ -286,3 +286,135 @@ def borrar_inventario(request, id):
         'fecha_actual': datetime.date.today(),
     }
     return render(request, 'inventario/borrar_inventario.html', contexto)
+
+# ==========================================
+# VISTAS: MENÚ (¡NUEVO!)
+# ==========================================
+
+def ver_menu(request):
+    """
+    Vista para mostrar todos los productos del menú.
+    """
+    # Obtenemos todos los productos del menú
+    productos = Menu.objects.all()
+    
+    contexto = {
+        'productos': productos,
+        'fecha_actual': datetime.date.today(),
+    }
+    return render(request, 'menu/ver_menu.html', contexto)
+
+def agregar_menu(request):
+    """
+    Vista para mostrar el formulario de agregar producto y
+    para procesar la adición de un nuevo producto al menú.
+    """
+    # Obtenemos todos los artículos de inventario para el <select>
+    articulos_inventario = Inventario.objects.all()
+    
+    if request.method == 'POST':
+        # Capturamos los datos del formulario
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        precio = request.POST.get('precio', 0.0)
+        categoria = request.POST.get('categoria')
+        tamaño = request.POST.get('tamaño')
+        disponible = 'disponible' in request.POST # Checkbox
+
+        # 1. Creamos el objeto Menu con los datos simples
+        nuevo_producto = Menu.objects.create(
+            nombre=nombre,
+            descripcion=descripcion,
+            precio=precio,
+            categoria=categoria,
+            tamaño=tamaño,
+            disponible=disponible
+        )
+
+        # 2. Obtenemos la lista de IDs de los artículos seleccionados
+        articulos_ids = request.POST.getlist('articulos')
+
+        # 3. Asignamos esos artículos al producto recién creado
+        if articulos_ids:
+            nuevo_producto.articulos.set(articulos_ids)
+        
+        # Redirigimos a la lista de menú
+        return redirect('ver_menu')
+
+    # Si es GET, solo mostramos el formulario
+    contexto = {
+        'articulos_inventario': articulos_inventario,
+        'fecha_actual': datetime.date.today(),
+    }
+    return render(request, 'menu/agregar_menu.html', contexto)
+
+def actualizar_menu(request, id):
+    """
+    Vista para mostrar el formulario con los datos de un producto específico
+    que se desea actualizar.
+    """
+    # Obtenemos el producto específico
+    producto = get_object_or_404(Menu, id=id)
+    # Obtenemos todos los artículos para el <select>
+    articulos_inventario = Inventario.objects.all()
+    
+    contexto = {
+        'producto': producto,
+        'articulos_inventario': articulos_inventario,
+        'fecha_actual': datetime.date.today(),
+    }
+    return render(request, 'menu/actualizar_menu.html', contexto)
+
+def realizar_actualizacion_menu(request):
+    """
+    Vista para procesar la actualización de un producto del menú.
+    """
+    if request.method == 'POST':
+        # Obtenemos el ID del producto a actualizar
+        id_producto = request.POST.get('id_producto')
+        
+        try:
+            # Buscamos el producto
+            producto = Menu.objects.get(id=id_producto)
+            
+            # 1. Actualizamos los datos simples
+            producto.nombre = request.POST.get('nombre')
+            producto.descripcion = request.POST.get('descripcion')
+            producto.precio = request.POST.get('precio', 0.0)
+            producto.categoria = request.POST.get('categoria')
+            producto.tamaño = request.POST.get('tamaño')
+            producto.disponible = 'disponible' in request.POST # Checkbox
+            
+            producto.save() # Guardamos los campos simples
+
+            # 2. Actualizamos la relación ManyToMany
+            articulos_ids = request.POST.getlist('articulos')
+            producto.articulos.set(articulos_ids)
+
+        except Menu.DoesNotExist:
+            pass 
+        
+        # Redirigimos a la lista de menú
+        return redirect('ver_menu')
+    
+    # Si no es POST, redirigir a la lista
+    return redirect('ver_menu')
+
+def borrar_menu(request, id):
+    """
+    Vista para confirmar y procesar la eliminación de un producto.
+    """
+    # Obtenemos el producto
+    producto = get_object_or_404(Menu, id=id)
+    
+    if request.method == 'POST':
+        # Si el método es POST, eliminamos
+        producto.delete()
+        return redirect('ver_menu')
+    
+    # Si es GET, mostramos la página de confirmación
+    contexto = {
+        'producto': producto,
+        'fecha_actual': datetime.date.today(),
+    }
+    return render(request, 'menu/borrar_menu.html', contexto)
