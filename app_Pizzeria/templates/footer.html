@@ -1,0 +1,16 @@
+<!-- PASO 19: Footer fijo al final -->
+<footer class="footer fixed-bottom py-3" style="background-color: #343a40; color: white;">
+    <div class="container text-center">
+        <span>
+            &copy; <span id="footer-year"></span> Derechos de autor.
+            Creado por Estudiante Carlos Lozano, Cbtis 128.
+            Fecha del sistema: <span id="footer-date"></span>
+        </span>
+    </div>
+</footer>
+
+<script>
+    // Script simple para actualizar fecha y año dinámicamente
+    document.getElementById('footer-year').innerText = new Date().getFullYear();
+    document.getElementById('footer-date').innerText = new Date().toLocaleDateString('es-MX');
+</script>

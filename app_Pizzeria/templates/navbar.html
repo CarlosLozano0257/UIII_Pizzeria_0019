@@ -1,0 +1,58 @@
+<!-- PASO 18: Navbar - Archivo Completo -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343a40;"> <!-- Color oscuro moderno -->
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'inicio_pizzeria' %}">
+            🍕 Pizzeria Admin
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto"> <!-- ms-auto alinea a la derecha -->
+                
+                <!-- Inicio -->
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'inicio_pizzeria' %}">
+                        🏠 Inicio
+                    </a>
+                </li>
+                
+                <!-- Proveedores -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProveedores" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        🧑‍🍳 Proveedores
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownProveedores">
+                        <li><a class="dropdown-item" href="{% url 'agregar_proveedor' %}">Agregar proveedores</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_proveedores' %}">Ver proveedores</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Inventario -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInventario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        📦 Inventario
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownInventario">
+                        <!-- Vínculos actualizados para Inventario -->
+                        <li><a class="dropdown-item" href="{% url 'agregar_inventario' %}">Agregar artículo</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_inventario' %}">Ver artículos</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        📖 Menú
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
+                        <!-- Estos enlaces (actualmente '#') funcionarán en la Parte 3 -->
+                        <li><a class="dropdown-item" href="#">Agregar producto</a></li>
+                        <li><a class="dropdown-item" href="#">Ver producto</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>

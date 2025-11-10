@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Ver Proveedores{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>🧑‍🍳 Gestión de Proveedores</h2>
+        <a href="{% url 'agregar_proveedor' %}" class="btn btn-success">
+            ➕ Agregar Proveedor
+        </a>
+    </div>
+
+    <!-- PASO 22: Tabla con botones editar y borrar -->
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Teléfono</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Dirección</th> <!-- AÑADIDO -->
+                            <th scope="col">Tipo Producto</th>
+                            <th scope="col">RFC</th>
+                            <th scope="col">Activo</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in proveedores %}
+                        <tr>
+                            <th scope="row">{{ p.id }}</th>
+                            <td>{{ p.nombre_proveedor }}</td>
+                            <td>{{ p.telefono_contacto|default_if_none:"N/A" }}</td>
+                            <td>{{ p.email_contacto|default_if_none:"N/A" }}</td>
+                            <td>{{ p.direccion|default_if_none:"N/A" }}</td> <!-- AÑADIDO -->
+                            <td>{{ p.tipo_producto|default_if_none:"N/A" }}</td>
+                            <td>{{ p.rfc|default_if_none:"N/A" }}</td>
+                            <td>
+                                {% if p.activo %}
+                                    <span class="badge bg-success">Sí</span>
+                                {% else %}
+                                    <span class="badge bg-danger">No</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <!-- Botones de Editar y Borrar -->
+                                <a href="{% url 'actualizar_proveedor' p.id %}" class="btn btn-warning btn-sm" title="Editar">
+                                    ✏️
+                                </a>
+                                <a href="{% url 'borrar_proveedor' p.id %}" class="btn btn-danger btn-sm" title="Borrar">
+                                    🗑️
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center">No hay proveedores registrados.</td> <!-- CAMBIADO DE 8 A 9 -->
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

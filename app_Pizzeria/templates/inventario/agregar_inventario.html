@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block titulo %}➕ Agregar Artículo{% endblock %}
+
+{% block content %} <!-- CORREGIDO -->
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <!-- Columna centrada -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h5 mb-0">➕ Agregar Nuevo Artículo al Inventario</h2>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <!-- Formulario -->
+                    <form action="{% url 'agregar_inventario' %}" method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Fila 1: Nombre y Unidad -->
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="nombre_articulo" class="form-label">Nombre del Artículo</label>
+                                <input type="text" class="form-control" id="nombre_articulo" name="nombre_articulo" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="unidad" class="form-label">Unidad (ej: kg, pz, lt)</label>
+                                <input type="text" class="form-control" id="unidad" name="unidad" required>
+                            </div>
+                        </div>
+
+                        <!-- Fila 2: Stock, Stock Mínimo y Costo -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="stock" class="form-label">Stock Actual</label>
+                                <input type="number" step="0.01" class="form-control" id="stock" name="stock" value="0.00">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="stock_minimo" class="form-label">Stock Mínimo</label>
+                                <input type="number" step="0.01" class="form-control" id="stock_minimo" name="stock_minimo" value="0.00">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="costo_unitario" class="form-label">Costo Unitario ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="costo_unitario" name="costo_unitario" value="0.00">
+                            </div>
+                        </div>
+
+                        <!-- Fila 3: Proveedor y Fecha -->
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="proveedor" class="form-label">Proveedor</label>
+                                <select class="form-select" id="proveedor" name="proveedor">
+                                    <option value="">(Ninguno)</option>
+                                    {% for p in proveedores %}
+                                        <option value="{{ p.id }}">{{ p.nombre_proveedor }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="fecha_ultima_compra" class="form-label">Última Compra</label>
+                                <input type="date" class="form-control" id="fecha_ultima_compra" name="fecha_ultima_compra">
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'ver_inventario' %}" class="btn btn-secondary me-md-2">
+                                ❌ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                💾 Guardar Artículo
+                            </button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

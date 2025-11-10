@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar Proveedor{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-warning text-dark">
+                    <h2 class="h5 mb-0">✏️ Actualizar Proveedor: {{ proveedor.nombre_proveedor }}</h2>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <!-- PASO 22: Formulario de actualizar -->
+                    <!-- La acción apunta a la URL 'realizar_actualizacion_proveedor' -->
+                    <form method="POST" action="{% url 'realizar_actualizacion_proveedor' proveedor.id %}">
+                        {% csrf_token %} <!-- Seguridad de Django -->
+
+                        <div class="mb-3">
+                            <label for="nombre_proveedor" class="form-label">Nombre del Proveedor (*)</label>
+                            <input type="text" class="form-control" id="nombre_proveedor" name="nombre_proveedor" value="{{ proveedor.nombre_proveedor }}" required>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="telefono_contacto" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefono_contacto" name="telefono_contacto" value="{{ proveedor.telefono_contacto|default:'' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email_contacto" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email_contacto" name="email_contacto" value="{{ proveedor.email_contacto|default:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" value="{{ proveedor.direccion|default:'' }}">
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-md-6 mb-3">
+                                <label for="tipo_producto" class="form-label">Tipo de Producto</label>
+                                <input type="text" class="form-control" id="tipo_producto" name="tipo_producto" value="{{ proveedor.tipo_producto|default:'' }}">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="rfc" class="form-label">RFC</label>
+                                <input type="text" class="form-control" id="rfc" name="rfc" value="{{ proveedor.rfc|default:'' }}">
+                            </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="activo" name="activo" {% if proveedor.activo %}checked{% endif %}>
+                            <label class="form-check-label" for="activo">
+                                Activo
+                            </label>
+                        </div>
+                        
+                        <hr>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'ver_proveedores' %}" class="btn btn-secondary me-md-2">
+                                ❌ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                💾 Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
