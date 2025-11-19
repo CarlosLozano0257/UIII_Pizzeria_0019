@@ -26,6 +26,7 @@
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Nombre</th>
+                                <th scope="col">Descripción</th> <!-- AÑADIDO -->
                                 <th scope="col">Categoría</th>
                                 <th scope="col">Tamaño</th>
                                 <th scope="col">Precio</th>
@@ -39,13 +40,19 @@
                             <tr>
                                 <th scope="row">{{ prod.id }}</th>
                                 <td>{{ prod.nombre }}</td>
+                                <td>{{ prod.descripcion|truncatewords:10|default_if_none:"N/A" }}</td> <!-- AÑADIDO -->
                                 <td>{{ prod.categoria|default_if_none:"N/A" }}</td>
                                 <td>{{ prod.tamaño|default_if_none:"N/A" }}</td>
                                 <td>${{ prod.precio|floatformat:2 }}</td>
                                 <td>
-                                    <span class="badge bg-info">
-                                        {{ prod.articulos.count }} art.
-                                    </span>
+                                    <!-- CAMBIO: Mostrar nombres en lugar de contador -->
+                                    {% for art in prod.articulos.all %}
+                                        <span class="badge bg-info m-1" style="font-weight: 500;">
+                                            {{ art.nombre_articulo }}
+                                        </span>
+                                    {% empty %}
+                                        <span class="text-muted small">N/A</span>
+                                    {% endfor %}
                                 </td>
                                 <td>
                                     {% if prod.disponible %}
@@ -66,7 +73,7 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="8" class="text-center">No hay productos registrados.</td>
+                                <td colspan="9" class="text-center">No hay productos registrados.</td> <!-- CAMBIADO DE 8 A 9 -->
                             </tr>
                             {% endfor %}
                         </tbody>

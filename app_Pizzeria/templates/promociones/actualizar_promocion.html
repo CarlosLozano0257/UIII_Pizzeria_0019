@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}✏️ Actualizar Promoción{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-warning text-dark">
+                    <h2 class="h5 mb-0">✏️ Actualizar Promoción: {{ promocion.nombre_promo }}</h2>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <form action="{% url 'realizar_actualizacion_promocion' %}" method="POST">
+                        {% csrf_token %}
+                        <!-- ID oculto para saber a quién actualizar -->
+                        <input type="hidden" name="id_promo" value="{{ promocion.id }}">
+                        
+                        <!-- Fila 1: Nombre -->
+                        <div class="mb-3">
+                            <label for="nombre_promo" class="form-label">Nombre de la Promoción (*)</label>
+                            <input type="text" class="form-control" id="nombre_promo" name="nombre_promo" value="{{ promocion.nombre_promo }}" required>
+                        </div>
+
+                        <!-- Fila 2: Descripción -->
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3">{{ promocion.descripcion|default:'' }}</textarea>
+                        </div>
+
+                        <!-- Fila 3: Fechas Inicio y Fin -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="fecha_inicio" class="form-label">Fecha de Inicio (*)</label>
+                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" value="{{ promocion.fecha_inicio|date:'Y-m-d' }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fecha_fin" class="form-label">Fecha de Fin (*)</label>
+                                <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" value="{{ promocion.fecha_fin|date:'Y-m-d' }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Fila 4: Código, Precio y Estado -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="codigo_promo" class="form-label">Código (Opcional)</label>
+                                <input type="text" class="form-control" id="codigo_promo" name="codigo_promo" value="{{ promocion.codigo_promo|default:'' }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="precio_especial" class="form-label">Precio Especial ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="precio_especial" name="precio_especial" value="{{ promocion.precio_especial|default:'' }}">
+                            </div>
+                             <div class="col-md-4">
+                                <label for="estado" class="form-label">Estado (*)</label>
+                                <select class="form-select" id="estado" name="estado">
+                                    <option value="Activa" {% if promocion.estado == 'Activa' %}selected{% endif %}>Activa</option>
+                                    <option value="Inactiva" {% if promocion.estado == 'Inactiva' %}selected{% endif %}>Inactiva</option>
+                                    <option value="Vencida" {% if promocion.estado == 'Vencida' %}selected{% endif %}>Vencida</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'ver_promociones' %}" class="btn btn-secondary me-md-2">
+                                ❌ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                💾 Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

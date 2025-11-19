@@ -1,58 +1,100 @@
-<!-- PASO 18: Navbar - Archivo Completo -->
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #343a40;"> <!-- Color oscuro moderno -->
+<!-- app_Pizzeria/templates/navbar.html -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'inicio_pizzeria' %}">
-            🍕 Pizzeria Admin
+        
+        <!-- Título Principal -->
+        <a class="navbar-brand fw-bold" href="{% url 'inicio_pizzeria' %}">
+            🍕 Sistema Pizzería
         </a>
+        
+        <!-- Botón Hamburguesa (para móviles) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+        
+        <!-- Contenido del Navbar -->
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto"> <!-- ms-auto alinea a la derecha -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 
-                <!-- Inicio -->
+                <!-- 1. Inicio -->
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'inicio_pizzeria' %}">
-                        🏠 Inicio
-                    </a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'inicio_pizzeria' %}">🏠 Inicio</a>
                 </li>
                 
-                <!-- Proveedores -->
+                <!-- 2. Proveedores -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProveedores" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        🧑‍🍳 Proveedores
+                        🚚 Proveedores
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownProveedores">
-                        <li><a class="dropdown-item" href="{% url 'agregar_proveedor' %}">Agregar proveedores</a></li>
-                        <li><a class="dropdown-item" href="{% url 'ver_proveedores' %}">Ver proveedores</a></li>
+                        <li><a class="dropdown-item" href="{% url 'agregar_proveedor' %}">Agregar Proveedor</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_proveedores' %}">Ver Proveedores</a></li>
                     </ul>
                 </li>
                 
-                <!-- Inventario -->
+                <!-- 3. Inventario -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownInventario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         📦 Inventario
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownInventario">
-                        <!-- Vínculos actualizados para Inventario -->
-                        <li><a class="dropdown-item" href="{% url 'agregar_inventario' %}">Agregar artículo</a></li>
-                        <li><a class="dropdown-item" href="{% url 'ver_inventario' %}">Ver artículos</a></li>
+                        <li><a class="dropdown-item" href="{% url 'agregar_inventario' %}">Agregar Artículo</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_inventario' %}">Ver Inventario</a></li>
                     </ul>
                 </li>
                 
-                <!-- Menu -->
+                <!-- 4. Menú -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         📖 Menú
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu">
-                        <!-- Vínculos actualizados para Menu -->
-                        <li><a class="dropdown-item" href="{% url 'agregar_menu' %}">Agregar producto</a></li>
-                        <li><a class="dropdown-item" href="{% url 'ver_menu' %}">Ver producto</a></li>
+                        <li><a class="dropdown-item" href="{% url 'agregar_menu' %}">Agregar Producto</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_menu' %}">Ver Menú</a></li>
+                    </ul>
+                </li>
+
+                <!-- 5. Empleados (NUEVO) -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownEmpleados" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        🧑‍🍳 Empleados
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownEmpleados">
+                        <li><a class="dropdown-item" href="{% url 'agregar_empleado' %}">Agregar Empleado</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_empleados' %}">Ver Empleados</a></li>
+                    </ul>
+                </li>
+
+                <!-- 6. Promociones (NUEVO) -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPromociones" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        🎉 Promociones
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownPromociones">
+                        <li><a class="dropdown-item" href="{% url 'agregar_promocion' %}">Agregar Promoción</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_promociones' %}">Ver Promociones</a></li>
+                    </ul>
+                </li>
+
+                <!-- 7. Ventas (NUEVO) -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownVentas" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        💲 Ventas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownVentas">
+                        <li><a class="dropdown-item" href="{% url 'agregar_venta' %}">Registrar Venta</a></li>
+                        <li><a class="dropdown-item" href="{% url 'ver_ventas' %}">Ver Ventas</a></li>
                     </ul>
                 </li>
 
             </ul>
+
+            <!-- (Opcional: Lado derecho, como un botón de Login) -->
+            <!-- <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+            </ul> -->
         </div>
     </div>
 </nav>

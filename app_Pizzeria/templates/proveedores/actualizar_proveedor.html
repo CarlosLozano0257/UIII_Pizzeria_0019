@@ -14,8 +14,13 @@
                     
                     <!-- PASO 22: Formulario de actualizar -->
                     <!-- La acción apunta a la URL 'realizar_actualizacion_proveedor' -->
-                    <form method="POST" action="{% url 'realizar_actualizacion_proveedor' proveedor.id %}">
+                    
+                    <!-- CORRECCIÓN 1: Quitar el argumento 'proveedor.id' de la URL -->
+                    <form method="POST" action="{% url 'realizar_actualizacion_proveedor' %}">
                         {% csrf_token %} <!-- Seguridad de Django -->
+                        
+                        <!-- CORRECCIÓN 2: Añadir el campo oculto para enviar el ID -->
+                        <input type="hidden" name="id_proveedor" value="{{ proveedor.id }}">
 
                         <div class="mb-3">
                             <label for="nombre_proveedor" class="form-label">Nombre del Proveedor (*)</label>

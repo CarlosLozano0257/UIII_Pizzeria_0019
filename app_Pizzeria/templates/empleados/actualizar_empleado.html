@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}✏️ Actualizar Empleado{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-warning text-dark">
+                    <h2 class="h5 mb-0">✏️ Actualizar Empleado: {{ empleado.nombre_completo }}</h2>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <form action="{% url 'realizar_actualizacion_empleado' %}" method="POST">
+                        {% csrf_token %}
+                        <!-- ID oculto para saber a quién actualizar -->
+                        <input type="hidden" name="id_empleado" value="{{ empleado.id }}">
+                        
+                        <!-- Fila 1: Nombre y Puesto -->
+                        <div class="row mb-3">
+                            <div class="col-md-7">
+                                <label for="nombre_completo" class="form-label">Nombre Completo (*)</label>
+                                <input type="text" class="form-control" id="nombre_completo" name="nombre_completo" value="{{ empleado.nombre_completo }}" required>
+                            </div>
+                            <div class="col-md-5">
+                                <label for="puesto" class="form-label">Puesto (*)</label>
+                                <input type="text" class="form-control" id="puesto" name="puesto" value="{{ empleado.puesto }}" required>
+                            </div>
+                        </div>
+
+                        <!-- Fila 2: Teléfono y Email -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="tel" class="form-control" id="telefono" name="telefono" value="{{ empleado.telefono|default:'' }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="{{ empleado.email|default:'' }}">
+                            </div>
+                        </div>
+
+                        <!-- Fila 3: Contratación y Salario -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="fecha_contratacion" class="form-label">Fecha de Contratación (*)</label>
+                                <!-- Formatear fecha para el input type="date" -->
+                                <input type="date" class="form-control" id="fecha_contratacion" name="fecha_contratacion" value="{{ empleado.fecha_contratacion|date:'Y-m-d' }}" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="salario" class="form-label">Salario ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="salario" name="salario" value="{{ empleado.salario }}">
+                            </div>
+                        </div>
+
+                        <!-- Fila 4: Dirección -->
+                        <div class="mb-3">
+                            <label for="direccion" class="form-label">Dirección</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" value="{{ empleado.direccion|default:'' }}">
+                        </div>
+
+                        <hr>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'ver_empleados' %}" class="btn btn-secondary me-md-2">
+                                ❌ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-warning">
+                                💾 Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

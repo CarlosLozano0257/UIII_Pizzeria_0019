@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}🎉 Ver Promociones{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Encabezado de la página -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 class="h2">🎉 Gestión de Promociones</h1>
+        <a href="{% url 'agregar_promocion' %}" class="btn btn-success">
+            ➕ Agregar Promoción
+        </a>
+    </div>
+
+    <!-- Tarjeta que contiene la tabla -->
+    <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body">
+            
+            {% if promociones %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Código</th>
+                            <th scope="col">Precio Esp.</th>
+                            <th scope="col">Inicio</th>
+                            <th scope="col">Fin</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col" class="text-end">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for promo in promociones %}
+                        <tr>
+                            <td>{{ promo.id }}</td>
+                            <td>{{ promo.nombre_promo }}</td>
+                            <td>{{ promo.descripcion|truncatewords:10 }}</td>
+                            <td>
+                                {% if promo.codigo_promo %}
+                                <span class="badge bg-secondary">{{ promo.codigo_promo }}</span>
+                                {% else %}
+                                <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if promo.precio_especial %}
+                                ${{ promo.precio_especial|floatformat:2 }}
+                                {% else %}
+                                <span class="text-muted">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ promo.fecha_inicio|date:"d/m/Y" }}</td>
+                            <td>{{ promo.fecha_fin|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if promo.estado == 'Activa' %}
+                                <span class="badge bg-success">Activa</span>
+                                {% else %}
+                                <span class="badge bg-danger">{{ promo.estado }}</span>
+                                {% endif %}
+                            </td>
+                            
+                            <!-- Botones de Acción -->
+                            <td class="text-end">
+                                <a href="{% url 'actualizar_promocion' promo.id %}" class="btn btn-warning btn-sm me-1">
+                                    ✏️ Editar
+                                </a>
+                                <a href="{% url 'borrar_promocion' promo.id %}" class="btn btn-danger btn-sm">
+                                    🗑️ Borrar
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <!-- Mensaje si no hay promociones -->
+            <div class="alert alert-info text-center" role="alert">
+                Aún no hay promociones registradas. ¡Agrega la primera!
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

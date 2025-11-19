@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}🗑️ Borrar Promoción{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow border-danger rounded-3">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="h5 mb-0">🗑️ Confirmar Borrado</h2>
+                </div>
+                <div class="card-body p-4 text-center">
+                    
+                    <p class="fs-5">¿Estás seguro de que deseas borrar la promoción?</p>
+                    
+                    <h3 class="text-danger">{{ promocion.nombre_promo }}</h3>
+                    <p class="text-muted">(Código: {{ promocion.codigo_promo|default:'N/A' }})</p>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 d-md-flex justify-content-center mt-4">
+                            <a href="{% url 'ver_promociones' %}" class="btn btn-secondary me-md-2">
+                                ❌ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-danger">
+                                ✅ Sí, Borrar Promoción
+                            </button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

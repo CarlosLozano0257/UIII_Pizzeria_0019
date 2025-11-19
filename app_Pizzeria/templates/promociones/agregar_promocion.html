@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}➕ Agregar Promoción{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-success text-white">
+                    <h2 class="h5 mb-0">➕ Agregar Nueva Promoción</h2>
+                </div>
+                <div class="card-body p-4">
+                    
+                    <form action="{% url 'agregar_promocion' %}" method="POST">
+                        {% csrf_token %}
+                        
+                        <!-- Fila 1: Nombre -->
+                        <div class="mb-3">
+                            <label for="nombre_promo" class="form-label">Nombre de la Promoción (*)</label>
+                            <input type="text" class="form-control" id="nombre_promo" name="nombre_promo" required>
+                        </div>
+
+                        <!-- Fila 2: Descripción -->
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3"></textarea>
+                        </div>
+
+                        <!-- Fila 3: Fechas Inicio y Fin -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="fecha_inicio" class="form-label">Fecha de Inicio (*)</label>
+                                <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fecha_fin" class="form-label">Fecha de Fin (*)</label>
+                                <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
+                            </div>
+                        </div>
+
+                        <!-- Fila 4: Código, Precio y Estado -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="codigo_promo" class="form-label">Código (Opcional)</label>
+                                <input type="text" class="form-control" id="codigo_promo" name="codigo_promo" placeholder="Ej: PIZZA2X1">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="precio_especial" class="form-label">Precio Especial ($)</label>
+                                <input type="number" step="0.01" class="form-control" id="precio_especial" name="precio_especial" placeholder="Opcional">
+                            </div>
+                             <div class="col-md-4">
+                                <label for="estado" class="form-label">Estado (*)</label>
+                                <select class="form-select" id="estado" name="estado">
+                                    <option value="Activa" selected>Activa</option>
+                                    <option value="Inactiva">Inactiva</option>
+                                    <option value="Vencida">Vencida</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Botones -->
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="{% url 'ver_promociones' %}" class="btn btn-secondary me-md-2">
+                                ❌ Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                💾 Guardar Promoción
+                            </button>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
